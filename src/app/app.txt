@@ -1,0 +1,1 @@
+This is app component or root component folder
