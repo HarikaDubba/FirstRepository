@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-
+import {Component, DoCheck, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {CartService} from '../_services/cart.service';
+import {ColorService} from '../_services/color.service';
+ 
 @Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class NavComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+export class NavbarComponent implements OnInit, DoCheck {
+  products;
+  backgroundColor = '#000000';
+ 
+  constructor(private cartService: CartService,
+              private colorService: ColorService) {
   }
-
+ 
+  ngOnInit(): void {
+    this.colorService.data$.subscribe((data) => {
+        this.backgroundColor = data.color;
+      }
+    );
+  }
+ 
+  ngDoCheck(): void {
+    this.products = this.cartService.products;
+  }
+ 
 }
